@@ -1,7 +1,7 @@
 variable "name" {}
 variable "namespace" {}
 variable "secret_store_name" {
-  default = "vault-backend"
+  default = "vault-store"
 }
 variable "secret_store_kind" {
   default = "ClusterSecretStore"

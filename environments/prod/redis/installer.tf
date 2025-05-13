@@ -1,11 +1,19 @@
-module "installer_redis" {
+module "redis" {
   source = "../../../services/redis"
 
-  name                 = "redis"
-  chart_version        = "20.13.4"
-  namespace            = module.namespace_redis.name
-  existing_secret_name = module.vault_secret_manager_redis.secret_name
-  service_account_name = module.service_account_redis.service_account_name
+  namespace           = module.namespace_redis.name
+  existing_secret_name = module.external_secret_redis.target_secret_name
+  architecture        = "replication" # برای محیط production
+  memory_limit        = "512Mi"
+  cpu_limit           = "200m"
+  
+  extra_settings = {
+    "replica.replicaCount" = "2"
+    "metrics.enabled"     = "true"
+  }
 
-  depends_on = [module.service_account_redis, module.vault_secret_manager_redis]
+  depends_on = [
+    module.namespace_redis,
+    module.external_secret_redis
+  ]
 }

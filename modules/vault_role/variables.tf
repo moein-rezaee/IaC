@@ -21,5 +21,11 @@ variable "token_policies" {
 
 variable "token_ttl" {
   description = "TTL for the token issued by this role"
+  type        = number
+}
+
+variable "audience" {
+  description = "Name of the Vault Role"
   type        = string
+  default     = null
 }

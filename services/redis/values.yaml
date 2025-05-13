@@ -1,0 +1,21 @@
+auth:
+  enabled: true
+  existingSecret: ${existing_secret}
+  existingSecretPasswordKey: "password"
+
+architecture: ${architecture}
+persistence:
+  enabled: ${persistence_enabled}
+  storageClass: "${storage_class}"
+
+resources:
+  limits:
+    memory: "${memory_limit}"
+    cpu: "${cpu_limit}"
+  requests:
+    memory: "${memory_limit}"
+    cpu: "${cpu_limit}"
+
+master:
+  podAnnotations:
+    reloader.stakater.com/auto: "true"

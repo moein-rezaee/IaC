@@ -1,30 +1,64 @@
-variable "name" {
-  description = "Name for the Helm release (مثلا redis)"
+variable "release_name" {
+  description = "نام release Helm"
   type        = string
+  default     = "redis"
 }
 
 variable "namespace" {
-  description = "Namespace to install Redis into"
-  type        = string
-}
-
-variable "chart_version" {
-  description = "Version of the Redis Helm chart"
+  description = "Namespace برای نصب Redis"
   type        = string
 }
 
 variable "existing_secret_name" {
-  description = "The Kubernetes Secret name which stores Redis password (که Vault Agent Injector ساخته)"
+  description = "نام secret موجود که توسط external_secret_redis ایجاد شده"
   type        = string
+  default     = "redis-secret"
 }
 
-variable "secret_password_key" {
-  description = "The key inside Secret که پسورد رو نگه میداره (مثلا password)"
+variable "chart_version" {
+  description = "نسخه Helm chart"
   type        = string
-  default     = "password"
+  default     = "17.11.3" # آخرین نسخه را بررسی کنید
 }
 
-variable "service_account_name" {
-  description = "The ServiceAccount name که این پادها باید استفاده کنند"
+variable "architecture" {
+  description = "معماری Redis (standalone|replication|cluster)"
   type        = string
+  default     = "standalone"
+}
+
+variable "persistence_enabled" {
+  description = "فعال‌سازی ذخیره‌سازی دائم"
+  type        = bool
+  default     = true
+}
+
+variable "storage_class" {
+  description = "نام storage class برای persistence"
+  type        = string
+  default     = "standard"
+}
+
+variable "memory_limit" {
+  description = "محدودیت حافظه"
+  type        = string
+  default     = "256Mi"
+}
+
+variable "cpu_limit" {
+  description = "محدودیت CPU"
+  type        = string
+  default     = "100m"
+}
+
+variable "install_timeout" {
+  description = "زمان‌دهی نصب (ثانیه)"
+  type        = number
+  default     = 600
+}
+
+variable "extra_settings" {
+  description = "تنظیمات اضافی برای Helm chart"
+  type        = map(string) # تغییر به map از string
+  default     = {}
 }

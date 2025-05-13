@@ -1,4 +1,4 @@
-
+  
 resource "vault_kubernetes_auth_backend_role" "this" {
   role_name                      = var.role_name
   backend                        = "kubernetes"
@@ -6,4 +6,5 @@ resource "vault_kubernetes_auth_backend_role" "this" {
   bound_service_account_namespaces = var.bound_service_account_namespaces
   token_policies                 = var.token_policies
   token_ttl                      = var.token_ttl
+  audience = var.audience
 }
